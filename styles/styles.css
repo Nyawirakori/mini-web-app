@@ -1,0 +1,90 @@
+ body{
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+ }
+
+.heading {
+   background-color: black;
+   color: white;
+   padding: 10px;
+   text-align:left;
+}
+.heading h1 {
+    margin-bottom: 5px;
+    margin:0;
+}
+
+.heading h2 {
+    color: white;
+    margin-top: 0;
+}
+
+.films-container {
+    flex: 1;
+    border-right: 1px solid #ddd;
+}
+#container{
+    display: flex;
+}
+
+#films {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.film.item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.film.item button {
+    background-color: #f00;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.sold-out {
+    color: gray;
+}
+
+#movie-details {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+}
+
+.poster-container {
+    flex: 1;
+    margin-right: 20px;
+}
+
+#poster {
+    max-width: 100%;
+    height: auto;
+}
+
+.movie-info {
+    flex: 1;
+}
+
+#buy-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+#buy-btn.sold-out {
+    background-color: gray;
+    cursor: not-allowed;
+} 
