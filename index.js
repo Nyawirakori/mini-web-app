@@ -48,7 +48,7 @@ function fetchFilms() {
         filmDescription.textContent = film.description;
         const available = film.capacity - film.tickets_sold;
         availableTickets.textContent = available;
-        
+
         if (available <= 0) {
             buyTicketButton.textContent = 'Sold Out';
             buyTicketButton.classList.add('sold-out');
@@ -58,28 +58,44 @@ function fetchFilms() {
         }
     }
 
-    function buyTicket() {
-        if (buyTicketButton.classList.contains('sold-out')) return;
+    function buyTicket(event) {
+    event.preventDefault();
 
-        fetch(`http://localhost:3000/films/${currentFilmId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ tickets_sold: parseInt(availableTickets.textContent) + 1 })
-        })
+    if (buyTicketButton.classList.contains('sold-out')) return;
+
+    fetch(`http://localhost:3000/films/${currentFilmId}`)
         .then(response => response.json())
-        .then(updatedFilm => {
-            fetch('http://localhost:3000/tickets',{
-                method: 'POST',
-                headers:{
+        .then(film => {
+            let available = film.capacity - film.tickets_sold;
+
+            if (available <= 0) {
+                buyTicketButton.textContent = 'Sold Out';
+                buyTicketButton.classList.add('sold-out');
+                return;
+            }
+
+            const updatedTicketsSold = film.tickets_sold + 1;
+
+            fetch(`http://localhost:3000/films/${currentFilmId}`, {
+                method: 'PATCH',
+                headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({film_id: currentFilmId, number_of_tickets: 1})
+                body: JSON.stringify({ tickets_sold: updatedTicketsSold })
             })
-            displayFilmDetails(updatedFilm);
+            .then(response => response.json())
+            .then(updatedFilm => {
+                availableTickets.textContent = film.capacity - updatedTicketsSold;
+
+                if (availableTickets.textContent <= 0) {
+                    buyTicketButton.textContent = 'Sold Out';
+                    buyTicketButton.classList.add('sold-out');
+                }
+
+                console.log(`Tickets Sold: ${updatedTicketsSold}, Available Tickets: ${availableTickets.textContent}`);
+            });
         });
-    }
+}
 
     function deleteFilm(filmId, listItem) {
         fetch(`http://localhost:3000/films/${filmId}`, {
