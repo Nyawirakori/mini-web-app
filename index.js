@@ -11,7 +11,7 @@ const buyTicketButton = document.getElementById('buy-btn');
 
 let currentFilmId;
 function fetchFilms() {
-        fetch('http://localhost:3000/films')
+        fetch('https://my-json-server.typicode.com/NyawiraKori/mini-web-app/films')
             .then(response => response.json())
             .then(films => {
                 filmsList.innerHTML = '';
@@ -63,7 +63,7 @@ function fetchFilms() {
 
     if (buyTicketButton.classList.contains('sold-out')) return;
 
-    fetch(`http://localhost:3000/films/${currentFilmId}`)
+    fetch(`https://my-json-server.typicode.com/NyawiraKori/mini-web-app/films/${currentFilmId}`)
         .then(response => response.json())
         .then(film => {
             let available = film.capacity - film.tickets_sold;
@@ -76,7 +76,7 @@ function fetchFilms() {
 
             const updatedTicketsSold = film.tickets_sold + 1;
 
-            fetch(`http://localhost:3000/films/${currentFilmId}`, {
+            fetch(`https://my-json-server.typicode.com/NyawiraKori/mini-web-app/films/${currentFilmId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ function fetchFilms() {
 }
 
     function deleteFilm(filmId, listItem) {
-        fetch(`http://localhost:3000/films/${filmId}`, {
+        fetch(`https://my-json-server.typicode.com/NyawiraKori/mini-web-app/films/${filmId}`, {
             method: 'DELETE'
         })
         .then(() => {
